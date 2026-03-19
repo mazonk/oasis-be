@@ -39,7 +39,8 @@ public class AuthService : IAuthService {
             var member = new Member {
                 Fname = dto.FName,
                 Lname = dto.LName,
-                Email = dto.Email
+                Email = dto.Email,
+                LevelId = 1 // Default to level 1 for new users
             };
             await _repo.AddMemberAsync(member);
 

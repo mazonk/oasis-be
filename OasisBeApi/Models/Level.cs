@@ -8,6 +8,7 @@ namespace Oasis.Models;
 public class Level {
     [Key]
     public int LevelId { get; set; }
+    public string? Name { get; set; }
     public int MinExp { get; set; }
 
     public ICollection<Team>? Teams { get; set; }

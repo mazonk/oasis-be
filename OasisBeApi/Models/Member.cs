@@ -18,7 +18,7 @@ public class Member {
     [Required]
     public string Email { get; set; } = null!;
     
-    public string Phone { get; set; } = null!;
+    public string? Phone { get; set; }
     public DateTime? Dob { get; set; }
 
     public int? LevelId { get; set; }

@@ -1,8 +1,12 @@
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Text;
+using Oasis.Extensions;
 using Oasis.Data;
 
-// Load environment variables from .env
 Env.Load();
 
 // Build the app
@@ -21,7 +25,8 @@ var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
 var ssl = Environment.GetEnvironmentVariable("DB_SSLMODE") ?? "Require";
 var trustCert = Environment.GetEnvironmentVariable("DB_TRUSTCERT") ?? "True";
 
-var connectionString = $"Host={host};Port={port};Database={db};Username={user};Password={password};SSL Mode={ssl};Trust Server Certificate={trustCert}";
+var connectionString =
+    $"Host={host};Port={port};Database={db};Username={user};Password={password};SSL Mode={ssl};Trust Server Certificate={trustCert}";
 
 // Add DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -30,9 +35,58 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Add Controllers
 builder.Services.AddControllers();
 
-// Swagger/OpenAPI
+// Add services and repositories
+builder.Services.AddApplicationServices();
+
+// --------------------
+// JWT Authentication
+// --------------------
+var jwtSecret = Environment.GetEnvironmentVariable("JWT_SECRET");
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(jwtSecret!))
+        };
+    });
+
+// --------------------
+// Swagger
+// --------------------
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Enter JWT token like: Bearer {your token}",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer"
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
 // --------------------
 // Build App
@@ -40,7 +94,7 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // --------------------
-// Configure Middleware
+// Middleware
 // --------------------
 if (app.Environment.IsDevelopment())
 {
@@ -49,9 +103,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
-// Map controller routes
 app.MapControllers();
 
 app.Run();

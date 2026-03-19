@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Oasis.Models;
+using Oasis.Data.Seed;
 
 namespace Oasis.Data;
 
@@ -34,6 +35,9 @@ public class AppDbContext : DbContext
             .HasOne(m => m.User)
             .WithOne(u => u.Member)
             .HasForeignKey<User>(u => u.MemberId);
+
+        // Seed levels
+        modelBuilder.Entity<Level>().HasData(LevelSeed.GetLevels());
 
         base.OnModelCreating(modelBuilder);
     }
