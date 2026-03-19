@@ -12,11 +12,14 @@ public static class ServiceRepositoryExtension {
         services.AddScoped<ITeamRepository, TeamRepository>();
         services.AddScoped<ITeamInvitationRepository, TeamInvitationRepository>();
         services.AddScoped<IMemberRepository, MemberRepository>();
+        services.AddScoped<IActivityRepository, ActivityRepository>();
 
         // Services
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<ITeamService, TeamService>();
         services.AddScoped<ITeamInvitationService, TeamInvitationService>();
+        services.AddScoped<IMemberService, MemberService>();
+        services.AddScoped<IActivityService, ActivityService>();
 
         return services;
     }
