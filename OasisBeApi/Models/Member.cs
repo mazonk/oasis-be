@@ -8,10 +8,17 @@ namespace Oasis.Models;
 public class Member {
     [Key]
     public int MemberId { get; set; }
+
+    [Required]
     public string Fname { get; set; } = null!;
+
+    [Required]
     public string Lname { get; set; } = null!;
+
+    [Required]
     public string Email { get; set; } = null!;
-    public string? Phone { get; set; }
+    
+    public string Phone { get; set; } = null!;
     public DateTime? Dob { get; set; }
 
     public int? LevelId { get; set; }
@@ -21,4 +28,5 @@ public class Member {
     public Team? Team { get; set; }
 
     public ICollection<MemberMood>? MemberMoods { get; set; }
+    public User? User { get; set; }
 }

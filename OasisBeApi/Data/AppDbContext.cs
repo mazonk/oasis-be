@@ -3,15 +3,17 @@ using Oasis.Models;
 
 namespace Oasis.Data;
 
-public class AppDbContext : DbContext {
+public class AppDbContext : DbContext
+{
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-    public DbSet<Level> Levels { get; set; } = null!;
-    public DbSet<Mood> Moods { get; set; } = null!;
-    public DbSet<ActivityCategory> ActivityCategories { get; set; } = null!;
-    public DbSet<Team> Teams { get; set; } = null!;
     public DbSet<Member> Members { get; set; } = null!;
+    public DbSet<User> Users { get; set; } = null!;
+    public DbSet<Level> Levels { get; set; } = null!;
+    public DbSet<Team> Teams { get; set; } = null!;
+    public DbSet<Mood> Moods { get; set; } = null!;
     public DbSet<MemberMood> MemberMoods { get; set; } = null!;
+    public DbSet<ActivityCategory> ActivityCategories { get; set; } = null!;
     public DbSet<Activity> Activities { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -20,12 +22,18 @@ public class AppDbContext : DbContext {
         modelBuilder.Entity<MemberMood>()
             .HasKey(mm => new { mm.MoodId, mm.MemberId });
 
-        // Team leader FK restriction (prevent cascade delete)
+        // Team leader FK restriction
         modelBuilder.Entity<Team>()
             .HasOne(t => t.Leader)
             .WithMany()
             .HasForeignKey(t => t.LeaderId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        // One-to-one between Member and User
+        modelBuilder.Entity<Member>()
+            .HasOne(m => m.User)
+            .WithOne(u => u.Member)
+            .HasForeignKey<User>(u => u.MemberId);
 
         base.OnModelCreating(modelBuilder);
     }
