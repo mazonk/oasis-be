@@ -1,0 +1,6 @@
+@OasisBeApi_HostAddress = http://localhost:5087
+
+GET {{OasisBeApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
