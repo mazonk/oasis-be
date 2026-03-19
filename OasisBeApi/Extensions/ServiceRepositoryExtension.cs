@@ -11,6 +11,7 @@ public static class ServiceRepositoryExtension {
         services.AddScoped<IAuthRepository, AuthRepository>();
         services.AddScoped<ITeamRepository, TeamRepository>();
         services.AddScoped<ITeamInvitationRepository, TeamInvitationRepository>();
+        services.AddScoped<IMemberRepository, MemberRepository>();
 
         // Services
         services.AddScoped<IAuthService, AuthService>();

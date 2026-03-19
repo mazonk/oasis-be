@@ -141,7 +141,7 @@ public class AuthService : IAuthService {
 
         var token = new JwtSecurityToken(
             claims: claims,
-            expires: DateTime.Now.AddDays(7),
+            expires: DateTime.Now.AddDays(1),
             signingCredentials: creds
         );
 

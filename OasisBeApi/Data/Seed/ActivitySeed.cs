@@ -1,0 +1,107 @@
+using Oasis.Models;
+
+namespace Oasis.Data.Seed;
+
+public static class ActivitySeed {
+    public static List<ActivityCategory> GetCategories() => new() {
+        new ActivityCategory { CategoryId = 1, Name = "Social" },
+        new ActivityCategory { CategoryId = 2, Name = "Outdoor" },
+        new ActivityCategory { CategoryId = 3, Name = "Wellness" },
+        new ActivityCategory { CategoryId = 4, Name = "Games" },
+        new ActivityCategory { CategoryId = 5, Name = "Food & Drink" },
+        new ActivityCategory { CategoryId = 6, Name = "Creative" },
+        new ActivityCategory { CategoryId = 7, Name = "Team Building" },
+        new ActivityCategory { CategoryId = 8, Name = "Mind & Reflection" }
+    };
+    
+    public static List<Activity> GetActivities() => new() {
+        //social
+        new Activity { ActivityId = 1, Title = "Coffee Chat", Description = "Grab coffee with a teammate and chat about non-work topics.", MinMember = 2, MaxMember = 4, Experience = 20, CategoryId = 1 },
+        new Activity { ActivityId = 2, Title = "Lunch Together", Description = "Eat lunch together away from desks.", MinMember = 2, MaxMember = 6, Experience = 25, CategoryId = 1 },
+        new Activity { ActivityId = 3, Title = "Random Topic Talk", Description = "Discuss a random fun topic.", MinMember = 2, MaxMember = 5, Experience = 20, CategoryId = 1 },
+        new Activity { ActivityId = 4, Title = "After Work Hangout", Description = "Spend time together after work.", MinMember = 2, MaxMember = 8, Experience = 50, CategoryId = 1 },
+        new Activity { ActivityId = 5, Title = "Two Truths One Lie", Description = "Play an icebreaker game.", MinMember = 3, MaxMember = 8, Experience = 25, CategoryId = 1 },
+        new Activity { ActivityId = 6, Title = "Story Sharing", Description = "Share personal or funny stories.", MinMember = 2, MaxMember = 6, Experience = 20, CategoryId = 1 },
+        new Activity { ActivityId = 7, Title = "Team Playlist", Description = "Create a shared music playlist.", MinMember = 2, MaxMember = 6, Experience = 15, CategoryId = 1 },
+        new Activity { ActivityId = 8, Title = "Photo Moment", Description = "Take a fun group photo.", MinMember = 2, MaxMember = 10, Experience = 10, CategoryId = 1 },
+        new Activity { ActivityId = 9, Title = "Compliment Circle", Description = "Give each other positive feedback.", MinMember = 3, MaxMember = 8, Experience = 30, CategoryId = 1 },
+        new Activity { ActivityId = 10, Title = "Coffee Roulette", Description = "Randomly pair up for coffee chats.", MinMember = 2, MaxMember = 10, Experience = 25, CategoryId = 1 },
+        //outdoor
+        new Activity { ActivityId = 11, Title = "Walk & Talk", Description = "Take a short walk together.", MinMember = 2, MaxMember = 5, Experience = 30, CategoryId = 2 },
+        new Activity { ActivityId = 12, Title = "Sunlight Break", Description = "Step outside and relax.", MinMember = 1, MaxMember = 10, Experience = 10, CategoryId = 2 },
+        new Activity { ActivityId = 13, Title = "Park Visit", Description = "Go to a nearby park.", MinMember = 2, MaxMember = 6, Experience = 35, CategoryId = 2 },
+        new Activity { ActivityId = 14, Title = "Outdoor Lunch", Description = "Eat lunch outside.", MinMember = 2, MaxMember = 6, Experience = 30, CategoryId = 2 },
+        new Activity { ActivityId = 15, Title = "Mini Hike", Description = "Take a longer walk in nature.", MinMember = 2, MaxMember = 6, Experience = 60, CategoryId = 2 },
+        new Activity { ActivityId = 16, Title = "Beach Walk", Description = "Walk along the beach.", MinMember = 2, MaxMember = 6, Experience = 50, CategoryId = 2 },
+        new Activity { ActivityId = 17, Title = "Fresh Air Break", Description = "Step out for fresh air.", MinMember = 1, MaxMember = 10, Experience = 10, CategoryId = 2 },
+        new Activity { ActivityId = 18, Title = "Outdoor Coffee", Description = "Grab coffee outside.", MinMember = 2, MaxMember = 4, Experience = 25, CategoryId = 2 },
+        new Activity { ActivityId = 19, Title = "Quick Run", Description = "Go for a short jog.", MinMember = 1, MaxMember = 4, Experience = 40, CategoryId = 2 },
+        new Activity { ActivityId = 20, Title = "Step Challenge", Description = "Compete on step counts.", MinMember = 2, MaxMember = 10, Experience = 45, CategoryId = 2 },
+        //wellness
+        new Activity { ActivityId = 21, Title = "Stretch Break", Description = "Do stretches together.", MinMember = 1, MaxMember = 10, Experience = 15, CategoryId = 3 },
+        new Activity { ActivityId = 22, Title = "Breathing Exercise", Description = "Practice deep breathing.", MinMember = 1, MaxMember = 10, Experience = 10, CategoryId = 3 },
+        new Activity { ActivityId = 23, Title = "Meditation Session", Description = "Guided meditation.", MinMember = 1, MaxMember = 10, Experience = 20, CategoryId = 3 },
+        new Activity { ActivityId = 24, Title = "Posture Reset", Description = "Fix posture together.", MinMember = 1, MaxMember = 10, Experience = 10, CategoryId = 3 },
+        new Activity { ActivityId = 25, Title = "Yoga Session", Description = "Do light yoga.", MinMember = 1, MaxMember = 8, Experience = 30, CategoryId = 3 },
+        new Activity { ActivityId = 26, Title = "Digital Detox Break", Description = "No screens for 15 minutes.", MinMember = 1, MaxMember = 10, Experience = 20, CategoryId = 3 },
+        new Activity { ActivityId = 27, Title = "Hydration Check", Description = "Drink water together.", MinMember = 1, MaxMember = 10, Experience = 5, CategoryId = 3 },
+        new Activity { ActivityId = 28, Title = "Eye Relaxation", Description = "Rest eyes from screens.", MinMember = 1, MaxMember = 10, Experience = 5, CategoryId = 3 },
+        new Activity { ActivityId = 29, Title = "Mindful Walk", Description = "Walk slowly and mindfully.", MinMember = 1, MaxMember = 6, Experience = 25, CategoryId = 3 },
+        new Activity { ActivityId = 30, Title = "Relaxation Music", Description = "Listen to calming music.", MinMember = 1, MaxMember = 6, Experience = 10, CategoryId = 3 },
+        //games
+        new Activity { ActivityId = 31, Title = "Board Game", Description = "Play a board game.", MinMember = 2, MaxMember = 6, Experience = 40, CategoryId = 4 },
+        new Activity { ActivityId = 32, Title = "Card Game", Description = "Play a quick card game.", MinMember = 2, MaxMember = 6, Experience = 30, CategoryId = 4 },
+        new Activity { ActivityId = 33, Title = "Trivia Quiz", Description = "Host a trivia game.", MinMember = 3, MaxMember = 10, Experience = 45, CategoryId = 4 },
+        new Activity { ActivityId = 34, Title = "Charades", Description = "Act out words.", MinMember = 3, MaxMember = 10, Experience = 35, CategoryId = 4 },
+        new Activity { ActivityId = 35, Title = "Office Bingo", Description = "Play bingo with office events.", MinMember = 3, MaxMember = 10, Experience = 40, CategoryId = 4 },
+        new Activity { ActivityId = 36, Title = "Ping Pong", Description = "Play table tennis.", MinMember = 2, MaxMember = 4, Experience = 40, CategoryId = 4 },
+        new Activity { ActivityId = 37, Title = "Foosball", Description = "Play foosball.", MinMember = 2, MaxMember = 4, Experience = 40, CategoryId = 4 },
+        new Activity { ActivityId = 38, Title = "Puzzle Challenge", Description = "Solve puzzles together.", MinMember = 2, MaxMember = 6, Experience = 35, CategoryId = 4 },
+        new Activity { ActivityId = 39, Title = "Kahoot Quiz", Description = "Run a Kahoot game.", MinMember = 3, MaxMember = 10, Experience = 45, CategoryId = 4 },
+        new Activity { ActivityId = 40, Title = "Speed Game", Description = "Quick reaction games.", MinMember = 2, MaxMember = 6, Experience = 30, CategoryId = 4 },
+        //food&drink
+        new Activity { ActivityId = 41, Title = "Snack Sharing", Description = "Share snacks.", MinMember = 2, MaxMember = 8, Experience = 25, CategoryId = 5 },
+        new Activity { ActivityId = 42, Title = "Coffee Tasting", Description = "Try different coffees.", MinMember = 2, MaxMember = 6, Experience = 30, CategoryId = 5 },
+        new Activity { ActivityId = 43, Title = "Tea Break", Description = "Relax with tea.", MinMember = 1, MaxMember = 6, Experience = 15, CategoryId = 5 },
+        new Activity { ActivityId = 44, Title = "Lunch Out", Description = "Eat at a restaurant.", MinMember = 2, MaxMember = 6, Experience = 50, CategoryId = 5 },
+        new Activity { ActivityId = 45, Title = "Breakfast Club", Description = "Have breakfast together.", MinMember = 2, MaxMember = 6, Experience = 30, CategoryId = 5 },
+        new Activity { ActivityId = 46, Title = "Smoothie Break", Description = "Make smoothies.", MinMember = 2, MaxMember = 5, Experience = 25, CategoryId = 5 },
+        new Activity { ActivityId = 47, Title = "Cake Friday", Description = "Bring and share cake.", MinMember = 2, MaxMember = 10, Experience = 35, CategoryId = 5 },
+        new Activity { ActivityId = 48, Title = "Potluck", Description = "Bring food to share.", MinMember = 3, MaxMember = 10, Experience = 60, CategoryId = 5 },
+        new Activity { ActivityId = 49, Title = "Ice Cream Break", Description = "Grab ice cream.", MinMember = 2, MaxMember = 6, Experience = 30, CategoryId = 5 },
+        new Activity { ActivityId = 50, Title = "Healthy Snack Break", Description = "Eat healthy snacks.", MinMember = 2, MaxMember = 6, Experience = 20, CategoryId = 5 },
+        //creative
+        new Activity { ActivityId = 51, Title = "Drawing Challenge", Description = "Draw something fun.", MinMember = 2, MaxMember = 6, Experience = 30, CategoryId = 6 },
+        new Activity { ActivityId = 52, Title = "Doodle Break", Description = "Doodle freely.", MinMember = 1, MaxMember = 6, Experience = 15, CategoryId = 6 },
+        new Activity { ActivityId = 53, Title = "Photo Contest", Description = "Take creative photos.", MinMember = 2, MaxMember = 10, Experience = 40, CategoryId = 6 },
+        new Activity { ActivityId = 54, Title = "Write a Story", Description = "Create a group story.", MinMember = 2, MaxMember = 6, Experience = 35, CategoryId = 6 },
+        new Activity { ActivityId = 55, Title = "Brainstorm Ideas", Description = "Come up with fun ideas.", MinMember = 2, MaxMember = 6, Experience = 25, CategoryId = 6 },
+        new Activity { ActivityId = 56, Title = "Lego Build", Description = "Build something together.", MinMember = 2, MaxMember = 6, Experience = 40, CategoryId = 6 },
+        new Activity { ActivityId = 57, Title = "Office Art", Description = "Decorate workspace.", MinMember = 2, MaxMember = 6, Experience = 30, CategoryId = 6 },
+        new Activity { ActivityId = 58, Title = "Music Jam", Description = "Play music together.", MinMember = 2, MaxMember = 6, Experience = 45, CategoryId = 6 },
+        new Activity { ActivityId = 59, Title = "Vision Board", Description = "Create future goals board.", MinMember = 2, MaxMember = 6, Experience = 35, CategoryId = 6 },
+        new Activity { ActivityId = 60, Title = "Creative Writing", Description = "Write short texts.", MinMember = 1, MaxMember = 6, Experience = 25, CategoryId = 6 },
+        //team building
+        new Activity { ActivityId = 61, Title = "Trust Exercise", Description = "Do trust-building tasks.", MinMember = 2, MaxMember = 6, Experience = 40, CategoryId = 7 },
+        new Activity { ActivityId = 62, Title = "Team Challenge", Description = "Solve a challenge together.", MinMember = 3, MaxMember = 8, Experience = 50, CategoryId = 7 },
+        new Activity { ActivityId = 63, Title = "Problem Solving", Description = "Work on puzzles.", MinMember = 2, MaxMember = 6, Experience = 40, CategoryId = 7 },
+        new Activity { ActivityId = 64, Title = "Escape Game", Description = "Simulated escape challenge.", MinMember = 3, MaxMember = 8, Experience = 70, CategoryId = 7 },
+        new Activity { ActivityId = 65, Title = "Role Play", Description = "Act scenarios.", MinMember = 2, MaxMember = 6, Experience = 35, CategoryId = 7 },
+        new Activity { ActivityId = 66, Title = "Goal Setting", Description = "Set team goals.", MinMember = 2, MaxMember = 6, Experience = 30, CategoryId = 7 },
+        new Activity { ActivityId = 67, Title = "Feedback Round", Description = "Give feedback.", MinMember = 2, MaxMember = 6, Experience = 30, CategoryId = 7 },
+        new Activity { ActivityId = 68, Title = "Collaboration Game", Description = "Solve tasks together.", MinMember = 3, MaxMember = 8, Experience = 45, CategoryId = 7 },
+        new Activity { ActivityId = 69, Title = "Strength Sharing", Description = "Share strengths.", MinMember = 2, MaxMember = 6, Experience = 25, CategoryId = 7 },
+        new Activity { ActivityId = 70, Title = "Values Discussion", Description = "Discuss team values.", MinMember = 2, MaxMember = 6, Experience = 30, CategoryId = 7 },
+        //mind&reflection
+        new Activity { ActivityId = 71, Title = "Daily Reflection", Description = "Reflect on your day.", MinMember = 1, MaxMember = 6, Experience = 15, CategoryId = 8 },
+        new Activity { ActivityId = 72, Title = "Gratitude Sharing", Description = "Share what you're grateful for.", MinMember = 1, MaxMember = 6, Experience = 20, CategoryId = 8 },
+        new Activity { ActivityId = 73, Title = "Mood Check", Description = "Talk about feelings.", MinMember = 1, MaxMember = 6, Experience = 15, CategoryId = 8 },
+        new Activity { ActivityId = 74, Title = "Silent Thinking", Description = "Sit quietly and think.", MinMember = 1, MaxMember = 6, Experience = 10, CategoryId = 8 },
+        new Activity { ActivityId = 75, Title = "Goal Reflection", Description = "Review personal goals.", MinMember = 1, MaxMember = 6, Experience = 20, CategoryId = 8 },
+        new Activity { ActivityId = 76, Title = "Positive Affirmations", Description = "Share affirmations.", MinMember = 1, MaxMember = 6, Experience = 15, CategoryId = 8 },
+        new Activity { ActivityId = 77, Title = "Journal Time", Description = "Write thoughts down.", MinMember = 1, MaxMember = 6, Experience = 20, CategoryId = 8 },
+        new Activity { ActivityId = 78, Title = "Future Vision", Description = "Think about future plans.", MinMember = 1, MaxMember = 6, Experience = 25, CategoryId = 8 },
+        new Activity { ActivityId = 79, Title = "Stress Check", Description = "Assess stress levels.", MinMember = 1, MaxMember = 6, Experience = 15, CategoryId = 8 },
+        new Activity { ActivityId = 80, Title = "Win Sharing", Description = "Share daily wins.", MinMember = 1, MaxMember = 6, Experience = 20, CategoryId = 8 },
+    };
+}

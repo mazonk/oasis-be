@@ -37,6 +37,7 @@ public class AppDbContext : DbContext
             .WithOne(u => u.Member)
             .HasForeignKey<User>(u => u.MemberId);
 
+        // TeamInvitation relationships
         modelBuilder.Entity<TeamInvitation>()
             .HasOne(ti => ti.Team)
             .WithMany(t => t.TeamInvitations)
@@ -45,12 +46,21 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<TeamInvitation>()
             .HasOne(ti => ti.InvitedBy)
-            .WithMany() // no back reference needed
+            .WithMany()
             .HasForeignKey(ti => ti.InvitedById)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // Seed levels
+        // unique team name
+        modelBuilder.Entity<Team>()
+            .HasIndex(t => t.Name)
+            .IsUnique();
+
+        // SEED DATA
         modelBuilder.Entity<Level>().HasData(LevelSeed.GetLevels());
+
+        modelBuilder.Entity<ActivityCategory>().HasData(ActivitySeed.GetCategories());
+
+        modelBuilder.Entity<Activity>().HasData(ActivitySeed.GetActivities());
 
         base.OnModelCreating(modelBuilder);
     }

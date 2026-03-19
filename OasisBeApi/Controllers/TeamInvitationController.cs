@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 using Oasis.Services.Interfaces;
 using Oasis.DTOs.Team;
 
@@ -45,5 +46,52 @@ public class TeamInvitationController : ControllerBase {
         }
     }
 
-    
+    [HttpPost("respond")]
+    public async Task<IActionResult> Respond([FromBody] RespondToInviteDto dto) {
+        var memberIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+
+        if (memberIdClaim == null)
+            return Unauthorized("JWT does not contain member ID.");
+
+        var memberId = int.Parse(memberIdClaim.Value);
+
+        try {
+            var accepted = await _service.RespondToInviteAsync(memberId, dto);
+            return Ok(new { Accepted = accepted });
+        }
+        catch (KeyNotFoundException ex) {
+            return NotFound(new { Message = ex.Message });
+        }
+        catch (InvalidOperationException ex) {
+            return BadRequest(new { Message = ex.Message });
+        }
+        catch (Exception ex) {
+            // fallback for unexpected errors
+            return StatusCode(500, new { Message = "An error occurred", Details = ex.Message });
+        }
+    }
+
+    [HttpPost("leave")]
+    public async Task<IActionResult> LeaveTeam() {
+        var memberIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+
+        if (memberIdClaim == null)
+            return Unauthorized("Invalid token");
+
+        var memberId = int.Parse(memberIdClaim.Value);
+
+        try {
+            await _service.LeaveTeamAsync(memberId);
+            return Ok(new { Message = "Successfully left the team" });
+        }
+        catch (KeyNotFoundException ex) {
+            return NotFound(new { Message = ex.Message });
+        }
+        catch (InvalidOperationException ex) {
+            return BadRequest(new { Message = ex.Message });
+        }
+        catch (Exception ex) {
+            return StatusCode(500, new { Message = "An error occurred", Details = ex.Message });
+        }
+    }
 }

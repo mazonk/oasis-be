@@ -10,10 +10,12 @@ namespace Oasis.Services;
 
 public class TeamService : ITeamService {
     private readonly ITeamRepository _repo;
+    private readonly IMemberRepository _memberRepository;
     private readonly ILogger<TeamService> _logger;
 
-    public TeamService(ITeamRepository repo, ILogger<TeamService> logger) {
+    public TeamService(ITeamRepository repo, IMemberRepository memberRepository, ILogger<TeamService> logger) {
         _repo = repo;
+        _memberRepository = memberRepository;
         _logger = logger;
     }
 
@@ -21,6 +23,11 @@ public class TeamService : ITeamService {
         if (dto == null) throw new ArgumentNullException(nameof(dto));
 
         try {
+            var leader = await _memberRepository.GetByIdAsync(dto.LeaderId);
+            if (leader == null) throw new KeyNotFoundException("Leader not found");
+
+            if (leader.TeamId.HasValue) throw new InvalidOperationException("Leader is already part of a team");
+            
             var team = new Team {
                 Name = dto.Name,
                 Description = dto.Description,
@@ -29,6 +36,9 @@ public class TeamService : ITeamService {
             };
 
             var addedTeam = await _repo.AddTeamAsync(team);
+
+            leader.TeamId = addedTeam.TeamId;
+            await _memberRepository.UpdateAsync(leader);
 
             return new TeamDto {
                 TeamId = addedTeam.TeamId,

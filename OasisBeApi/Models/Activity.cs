@@ -12,6 +12,7 @@ public class Activity {
     public string? Description { get; set; }
     public int? MinMember { get; set; }
     public int? MaxMember { get; set; }
+    public int Experience { get; set; }
 
     public int? CategoryId { get; set; }
     public ActivityCategory? Category { get; set; }

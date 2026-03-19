@@ -88,6 +88,8 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+builder.WebHost.UseUrls("http://localhost:5000");
+
 // --------------------
 // Build App
 // --------------------

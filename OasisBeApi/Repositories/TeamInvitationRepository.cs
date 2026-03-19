@@ -29,11 +29,23 @@ public class TeamInvitationRepository : ITeamInvitationRepository {
             .ToListAsync();
     }
 
+    public async Task<TeamInvitation?> GetByIdAsync(int id) {
+        return await _context.TeamInvitations
+            .Include(ti => ti.Team)
+            .Include(ti => ti.InvitedBy)
+            .FirstOrDefaultAsync(ti => ti.InvitationId == id);
+    }
+
     public async Task<List<TeamInvitation>> GetActiveInvitationsByEmailAsync(string email) {
         return await _context.TeamInvitations
             .Include(ti => ti.Team)
             .Include(ti => ti.InvitedBy)
-            .Where(ti => ti.Email == email && !ti.IsAccepted)
+            .Where(ti => ti.Email == email && !ti.IsAccepted && ti.AcceptedAt == null)
             .ToListAsync();
+    }
+
+    public async Task UpdateAsync(TeamInvitation invitation) {
+        _context.TeamInvitations.Update(invitation);
+        await _context.SaveChangesAsync();
     }
 }
