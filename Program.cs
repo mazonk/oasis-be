@@ -1,13 +1,47 @@
+using DotNetEnv;
+using Microsoft.EntityFrameworkCore;
+using Oasis.Data;
+
+// Load environment variables from .env
+Env.Load();
+
+// Build the app
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// --------------------
+// Configure Services
+// --------------------
+
+// PostgreSQL connection string from .env
+var host = Environment.GetEnvironmentVariable("DB_HOST");
+var port = Environment.GetEnvironmentVariable("DB_PORT") ?? "5432";
+var db = Environment.GetEnvironmentVariable("DB_NAME");
+var user = Environment.GetEnvironmentVariable("DB_USER");
+var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
+var ssl = Environment.GetEnvironmentVariable("DB_SSLMODE") ?? "Require";
+var trustCert = Environment.GetEnvironmentVariable("DB_TRUSTCERT") ?? "True";
+
+var connectionString = $"Host={host};Port={port};Database={db};Username={user};Password={password};SSL Mode={ssl};Trust Server Certificate={trustCert}";
+
+// Add DbContext
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(connectionString));
+
+// Add Controllers
+builder.Services.AddControllers();
+
+// Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// --------------------
+// Build App
+// --------------------
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// --------------------
+// Configure Middleware
+// --------------------
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -15,30 +49,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthorization();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+// Map controller routes
+app.MapControllers();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
