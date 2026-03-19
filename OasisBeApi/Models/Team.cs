@@ -27,4 +27,5 @@ public class Team {
     public Level Level { get; set; } = null!;
 
     public ICollection<Member>? Members { get; set; }
+    public ICollection<TeamInvitation>? TeamInvitations { get; set; }
 }

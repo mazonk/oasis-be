@@ -12,6 +12,7 @@ public class User {
     public int MemberId { get; set; }
 
     [Required]
+    [EmailAddress]
     public string Email { get; set; } = null!; // login email
 
     [Required]

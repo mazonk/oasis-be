@@ -16,6 +16,7 @@ public class Member {
     public string Lname { get; set; } = null!;
 
     [Required]
+    [EmailAddress]
     public string Email { get; set; } = null!;
     
     public string? Phone { get; set; }

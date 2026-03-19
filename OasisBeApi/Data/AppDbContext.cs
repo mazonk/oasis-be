@@ -12,6 +12,7 @@ public class AppDbContext : DbContext
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Level> Levels { get; set; } = null!;
     public DbSet<Team> Teams { get; set; } = null!;
+    public DbSet<TeamInvitation> TeamInvitations { get; set; } = null!;
     public DbSet<Mood> Moods { get; set; } = null!;
     public DbSet<MemberMood> MemberMoods { get; set; } = null!;
     public DbSet<ActivityCategory> ActivityCategories { get; set; } = null!;
@@ -35,6 +36,18 @@ public class AppDbContext : DbContext
             .HasOne(m => m.User)
             .WithOne(u => u.Member)
             .HasForeignKey<User>(u => u.MemberId);
+
+        modelBuilder.Entity<TeamInvitation>()
+            .HasOne(ti => ti.Team)
+            .WithMany(t => t.TeamInvitations)
+            .HasForeignKey(ti => ti.TeamId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<TeamInvitation>()
+            .HasOne(ti => ti.InvitedBy)
+            .WithMany() // no back reference needed
+            .HasForeignKey(ti => ti.InvitedById)
+            .OnDelete(DeleteBehavior.Restrict);
 
         // Seed levels
         modelBuilder.Entity<Level>().HasData(LevelSeed.GetLevels());
