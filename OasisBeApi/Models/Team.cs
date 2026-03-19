@@ -8,14 +8,23 @@ namespace Oasis.Models;
 public class Team {
     [Key]
     public int TeamId { get; set; }
+
+    [Required]
     public string Name { get; set; } = null!;
+
     public string? Description { get; set; }
 
-    public int? LeaderId { get; set; }
-    public Member? Leader { get; set; }
+    [Required]
+    public int LeaderId { get; set; }
 
-    public int? LevelId { get; set; }
-    public Level? Level { get; set; }
+    [Required]
+    public Member Leader { get; set; } = null!;
+
+    [Required]
+    public int LevelId { get; set; }
+
+    [Required]
+    public Level Level { get; set; } = null!;
 
     public ICollection<Member>? Members { get; set; }
 }
