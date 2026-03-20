@@ -13,6 +13,7 @@ public static class ServiceRepositoryExtension {
         services.AddScoped<ITeamInvitationRepository, TeamInvitationRepository>();
         services.AddScoped<IMemberRepository, MemberRepository>();
         services.AddScoped<IActivityRepository, ActivityRepository>();
+        services.AddScoped<ILevelRepository, LevelRepository>();
 
         // Services
         services.AddScoped<IAuthService, AuthService>();
@@ -20,6 +21,8 @@ public static class ServiceRepositoryExtension {
         services.AddScoped<ITeamInvitationService, TeamInvitationService>();
         services.AddScoped<IMemberService, MemberService>();
         services.AddScoped<IActivityService, ActivityService>();
+        services.AddScoped<IGeminiService, GeminiService>();
+        services.AddScoped<ILevelService, LevelService>();
 
         return services;
     }

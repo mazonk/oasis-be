@@ -7,10 +7,12 @@ namespace Oasis.Services;
 
 public class MemberService : IMemberService {
     private readonly IMemberRepository _repository;
+    private readonly ILevelRepository _levelRepository;
     private readonly ILogger<MemberService> _logger;
 
-    public MemberService(IMemberRepository repository, ILogger<MemberService> logger) {
+    public MemberService(IMemberRepository repository, ILevelRepository levelRepository, ILogger<MemberService> logger) {
         _repository = repository;
+        _levelRepository = levelRepository;
         _logger = logger;
     }
 
@@ -56,12 +58,23 @@ public class MemberService : IMemberService {
         if (dto.Dob.HasValue)
             member.Dob = dto.Dob;
 
-        if (dto.LevelId.HasValue)
-            member.LevelId = dto.LevelId.Value;
+        if (dto.Experience.HasValue) {
+            member.Experience = dto.Experience.Value;
+            await CheckAndUpdateLevelAsync(member);
+        }
 
         await _repository.UpdateAsync(member);
 
         _logger.LogInformation("Member {MemberId} updated successfully", memberId);
+    }
+
+    private async Task CheckAndUpdateLevelAsync(Oasis.Models.Member member) {
+        var appropriateLevel = await _levelRepository.GetHighestQualifyingLevelAsync(member.Experience);
+        if (appropriateLevel == null) return;
+        if (member.LevelId == appropriateLevel.LevelId) return;
+
+        member.LevelId = appropriateLevel.LevelId;
+        _logger.LogInformation("Member {MemberId} leveled up to {LevelName}", member.MemberId, appropriateLevel.Name);
     }
 
     private MemberDto MapToDto(Oasis.Models.Member member) {
@@ -73,6 +86,7 @@ public class MemberService : IMemberService {
             Phone = member.Phone,
             Dob = member.Dob,
             TeamName = member.Team?.Name,
+            Experience = member.Experience,
             LevelId = member.Level?.LevelId,
             LevelName = member.Level?.Name
         };

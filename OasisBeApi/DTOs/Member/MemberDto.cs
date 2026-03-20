@@ -7,8 +7,8 @@ public class MemberDto {
     public string Email { get; set; } = null!;
     public string? Phone { get; set; }
     public DateTime? Dob { get; set; }
-
     public string? TeamName { get; set; }
+    public int? Experience { get; set; }
     public int? LevelId { get; set; }
     public string? LevelName { get; set; }
 }

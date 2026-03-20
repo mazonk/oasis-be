@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using Oasis.Extensions;
 using Oasis.Data;
+using Oasis.Services;
 
 Env.Load();
 
@@ -36,7 +37,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddControllers();
 
 // Add services and repositories
+builder.Services.AddSingleton<ActivitySuggestionHistory>();
 builder.Services.AddApplicationServices();
+
+// Add HTTP client
+builder.Services.AddHttpClient();
 
 // --------------------
 // JWT Authentication

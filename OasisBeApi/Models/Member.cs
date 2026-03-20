@@ -22,6 +22,7 @@ public class Member {
     public string? Phone { get; set; }
     public DateTime? Dob { get; set; }
 
+    public int Experience { get; set; }
     public int? LevelId { get; set; }
     public Level? Level { get; set; }
 
