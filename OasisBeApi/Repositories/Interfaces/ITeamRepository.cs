@@ -7,4 +7,5 @@ public interface ITeamRepository {
     Task<List<Team>> GetAllTeamsAsync();
     Task<Team?> GetTeamByIdAsync(int id);
     Task UpdateAsync(Team team);
+    Task<Team?> GetTeamByMemberIdAsync(int memberId);
 }

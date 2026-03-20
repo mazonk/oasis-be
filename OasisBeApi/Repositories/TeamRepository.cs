@@ -37,9 +37,17 @@ public class TeamRepository : ITeamRepository {
             .Include(t => t.Level)
             .FirstOrDefaultAsync(t => t.TeamId == id);
     }
-    
+
     public async Task UpdateAsync(Team team) {
         _context.Teams.Update(team);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task<Team?> GetTeamByMemberIdAsync(int memberId) {
+        return await _context.Teams
+            .Include(t => t.Leader)
+            .Include(t => t.Level)
+            .Include(t => t.Members) // ← include the members collection
+            .FirstOrDefaultAsync(t => t.Members.Any(m => m.MemberId == memberId));
     }
 }

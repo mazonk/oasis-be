@@ -20,7 +20,7 @@ public class TeamInvitationRepository : ITeamInvitationRepository {
 
     public async Task<bool> ExistsAsync(int teamId, string email) {
         return await _context.TeamInvitations
-            .AnyAsync(x => x.TeamId == teamId && x.Email.ToLower() == email.ToLower() && !x.IsAccepted);
+            .AnyAsync(x => x.TeamId == teamId && x.Email.ToLower() == email.ToLower() && !x.IsAccepted && x.AcceptedAt == null);
     }
 
     public async Task<List<TeamInvitation>> GetByTeamIdAsync(int teamId) {

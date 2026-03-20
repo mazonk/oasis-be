@@ -60,4 +60,16 @@ public class TeamController : ControllerBase {
             return StatusCode(500, "Internal server error");
         }
     }
+
+    [HttpGet("member/{memberId}")]
+    public async Task<IActionResult> GetTeamByMemberId(int memberId) {
+        try {
+            var team = await _service.GetTeamByMemberIdAsync(memberId);
+            if (team == null) return NotFound();
+            return Ok(team);
+        } catch (Exception ex) {
+            _logger.LogError(ex, "Error fetching team by member id {MemberId}", memberId);
+            return StatusCode(500, "Internal server error");
+        }
+    }
 }

@@ -93,4 +93,24 @@ public class TeamService : ITeamService {
             throw;
         }
     }
+
+    public async Task<TeamDto?> GetTeamByMemberIdAsync(int memberId) {
+        try {
+            var team = await _repo.GetTeamByMemberIdAsync(memberId);
+            if (team == null) return null;
+
+            return new TeamDto {
+                TeamId = team.TeamId,
+                Name = team.Name,
+                Description = team.Description,
+                LeaderId = team.LeaderId,
+                Experience = team.Experience,
+                LevelName = team.Level.Name,
+                LevelId = team.LevelId
+            };
+        } catch (Exception ex) {
+            _logger.LogError(ex, "Error fetching team by member id {MemberId}", memberId);
+            throw;
+        }
+    }
 }
