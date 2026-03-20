@@ -20,6 +20,8 @@ public class Team {
     [Required]
     public Member Leader { get; set; } = null!;
 
+    public int Experience { get; set; } = 0;
+
     [Required]
     public int LevelId { get; set; }
 
@@ -28,4 +30,5 @@ public class Team {
 
     public ICollection<Member>? Members { get; set; }
     public ICollection<TeamInvitation>? TeamInvitations { get; set; }
+    public ICollection<TeamActivity>? CompletedActivities { get; set; }
 }

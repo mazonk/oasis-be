@@ -29,6 +29,7 @@ public class Member {
     public int? TeamId { get; set; }
     public Team? Team { get; set; }
 
+    public ICollection<MemberActivity>? CompletedActivities { get; set; }
     public ICollection<MemberMood>? MemberMoods { get; set; }
     public User? User { get; set; }
 }

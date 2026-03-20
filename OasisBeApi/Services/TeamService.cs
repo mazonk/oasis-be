@@ -32,6 +32,7 @@ public class TeamService : ITeamService {
                 Name = dto.Name,
                 Description = dto.Description,
                 LeaderId = dto.LeaderId,
+                Experience = 0,
                 LevelId = 1 // Default to "Getting Started" level for new teams
             };
 
@@ -45,6 +46,7 @@ public class TeamService : ITeamService {
                 Name = addedTeam.Name,
                 Description = addedTeam.Description,
                 LeaderId = addedTeam.LeaderId,
+                Experience = addedTeam.Experience,
                 LevelId = addedTeam.LevelId
             };
         } catch (DbUpdateException dbEx) {
@@ -64,6 +66,7 @@ public class TeamService : ITeamService {
                 Name = t.Name,
                 Description = t.Description,
                 LeaderId = t.LeaderId,
+                Experience = t.Experience,
                 LevelId = t.LevelId
             }).ToList();
         } catch (Exception ex) {
@@ -82,6 +85,7 @@ public class TeamService : ITeamService {
                 Name = team.Name,
                 Description = team.Description,
                 LeaderId = team.LeaderId,
+                Experience = team.Experience,
                 LevelId = team.LevelId
             };
         } catch (Exception ex) {

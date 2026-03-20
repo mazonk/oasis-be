@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Oasis.Services;
 using Oasis.Services.Interfaces;
+using Oasis.DTOs.Activity;
 
 namespace Oasis.Controllers;
 
@@ -37,6 +38,21 @@ public class ActivityController : ControllerBase {
             return Ok(activity);
         } catch (Exception ex) {
             _logger.LogError(ex, "Error fetching activity by id {ActivityId}", id);
+            return StatusCode(500, "Internal server error");
+        }
+    }
+
+    [HttpPost("{id}/complete")]
+    public async Task<IActionResult> CompleteActivity(int id, [FromBody] CompleteActivityRequestDto request) {
+        try {
+            var result = await _service.CompleteActivityAsync(id, request.MemberId);
+            return Ok(result);
+        } catch (KeyNotFoundException ex) {
+            return NotFound(ex.Message);
+        } catch (InvalidOperationException ex) {
+            return BadRequest(ex.Message);
+        } catch (Exception ex) {
+            _logger.LogError(ex, "Error completing activity {ActivityId}", id);
             return StatusCode(500, "Internal server error");
         }
     }

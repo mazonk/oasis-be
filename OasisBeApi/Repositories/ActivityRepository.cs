@@ -22,4 +22,14 @@ public class ActivityRepository : IActivityRepository
     public async Task<Activity?> GetActivityByIdAsync(int id) {
         return await _context.Activities.Include(a => a.Category).FirstOrDefaultAsync(a => a.ActivityId == id);
     }
+
+    public async Task AddMemberActivityAsync(MemberActivity memberActivity) {
+        await _context.MemberActivities.AddAsync(memberActivity);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task AddTeamActivityAsync(TeamActivity teamActivity) {
+        await _context.TeamActivities.AddAsync(teamActivity);
+        await _context.SaveChangesAsync();
+    }
 }

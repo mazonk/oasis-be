@@ -16,4 +16,7 @@ public class Activity {
 
     public int? CategoryId { get; set; }
     public ActivityCategory? Category { get; set; }
+
+    public ICollection<MemberActivity>? MemberActivities { get; set; }
+    public ICollection<TeamActivity>? TeamActivities { get; set; }
 }

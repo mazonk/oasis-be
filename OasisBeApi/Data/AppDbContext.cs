@@ -17,6 +17,8 @@ public class AppDbContext : DbContext
     public DbSet<MemberMood> MemberMoods { get; set; } = null!;
     public DbSet<ActivityCategory> ActivityCategories { get; set; } = null!;
     public DbSet<Activity> Activities { get; set; } = null!;
+    public DbSet<MemberActivity> MemberActivities { get; set; }
+    public DbSet<TeamActivity> TeamActivities { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

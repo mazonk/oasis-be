@@ -6,4 +6,6 @@ public class TeamDto {
     public string? Description { get; set; }
     public int LeaderId { get; set; }
     public int LevelId { get; set; }
+    public string? LevelName { get; set; }
+    public int Experience { get; set; }
 }
